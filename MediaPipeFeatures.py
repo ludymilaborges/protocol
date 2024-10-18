@@ -219,7 +219,6 @@ print("Frames with detected landmarks:", landmark_frame_count)
 # Read the data
 import csv
 
-# Run 6rd: Read the data
 numbers = []
 with open('features.txt', 'r') as file:
     for row in file:
