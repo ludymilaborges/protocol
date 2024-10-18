@@ -157,7 +157,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 #%%
 # Run 3rd: Load the pre-trained model.
 data = pd.read_excel('label_cut_data.xlsx')
-X = data.iloc[:, 0:14]  # Features
+X = data.iloc[:, 0:13]  # Features
 y = data.iloc[:, 15]    # Labels
 model = RandomForestClassifier(n_estimators=100, random_state=42)
 model.fit(X, y)
