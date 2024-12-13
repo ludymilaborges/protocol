@@ -234,111 +234,109 @@ with open('output.csv', 'w', newline='') as csvfile:
 
 print("Data saved to output.csv")
 
-#%% labeling again
-
+#%% labeling 
 import pandas as pd
 
-# Função para adicionar a coluna com a numeração
+# Function to add a numbering column
 def add_numbering_column(df):
-    # Número total de linhas
+    # number of rows
     total_rows = len(df)
     
-    # Configurações para numeração
+    # Configurations for numbering
     rows_per_value = 900
     max_value = 17
     
-    # Cria a coluna de numeração
+    # Create the numbering column
     numbering = []
     
-    # Define a numeração
+    # Define numeration
     for i in range(total_rows):
-        # Determine o bloco atual
+        # Determine the current block
         block_number = i // rows_per_value
-        # Determine o valor a ser atribuído
+        # Determine the value to be assigned
         value = (block_number % max_value) + 1
         numbering.append(value)
     
     df['Numbering'] = numbering
     return df
 
-# Caminho para o arquivo CSV de entrada e saída
-input_file = 'output.csv'  # Substitua pelo caminho do seu arquivo CSV de entrada
-output_file = 'data.csv'  # Substitua pelo caminho do seu arquivo CSV de saída
+# Paths for input CSV file and output CSV file
+input_file = 'output.csv'  # Replace with the path of your input CSV file
+output_file = 'data.csv'  # Replace with the path of your output CSV file
 
-# Ler o arquivo CSV
+# Read the CSV file
 df = pd.read_csv(input_file)
 
-# Adicionar a coluna de numeração
+# Add the numbering column
 df = add_numbering_column(df)
 
-# Salvar o DataFrame modificado em um novo arquivo CSV
+# Save the modified DataFrame to a new CSV file
 df.to_csv(output_file, index=False)
 
-print("Processamento concluído. Arquivo modificado salvo como:", output_file)
+print("Process concluded. The modified file was saved as:", output_file)
 
 
 #%% cutting 10% of data on position transition
 import pandas as pd
 
-# Função para processar o DataFrame
+# Function to process the DataFrame
 def process_dataframe(df):
     total_rows = len(df)
     rows_to_delete = set()
 
-    # Remover as primeiras 60 linhas
+    # Remove the first 60 rows
     rows_to_delete.update(range(60))
 
-    # Processar cada intervalo de 900 linhas
+    # Process each interval of 900 rows
     for start in range(900, total_rows, 900):
         end = start + 900
         if end > total_rows:
             end = total_rows
 
-        # Remover 30 linhas acima e 60 linhas abaixo
+        # Remove 30 rows above and 60 rows below
         rows_to_delete.update(range(max(0, start - 30), min(total_rows, start + 60)))
 
-    # Remover as linhas identificadas
+    # Remove the identified rows
     df_cleaned = df.drop(index=sorted(rows_to_delete))
 
     return df_cleaned
 
-# Caminho para o arquivo de entrada e saída
-input_file = 'data.csv'  # Substitua pelo caminho do seu arquivo de entrada
-output_file = 'cut_data2.xlsx'  # Substitua pelo caminho do seu arquivo de saída
+# Paths for input CSV file and output CSV file
+input_file = 'data.csv'  # Replace with the path of your input CSV file
+output_file = 'cut_data2.xlsx'  # Replace with the path of your output CSV file
 
-# Ler o arquivo Excel
+# Read the CSV file
 df = pd.read_csv(input_file)
 
-# Processar o DataFrame
+# Process the DataFrame
 df_cleaned = process_dataframe(df)
 
-# Salvar o DataFrame modificado em um novo arquivo Excel
+# Save the modified DataFrame to a new Excel file
 df_cleaned.to_excel(output_file, index=False)
 
-print("Processamento concluído. Arquivo modificado salvo como:", output_file)
+print("Process concluded. File modified saved as:", output_file)
 
 
-#%% adicionando outro label para in / out screen
+#%% adding another label for in / out screen
 import pandas as pd
 
-# Função para adicionar a nova coluna baseada na última coluna
+# Function to add the new column based on the last column
 def add_binary_column(df):
-    last_column = df.columns[-1]  # Identifica a última coluna
-    df['Binary'] = df[last_column].apply(lambda x: 2 if x > 9 else 1)  # Adiciona a nova coluna com base na última coluna
+    last_column = df.columns[-1]  # Identifies the last column
+    df['Binary'] = df[last_column].apply(lambda x: 2 if x > 9 else 1)  # Adds a new column with a value of 2 if the last column value is greater than 9, and 1 otherwise
     return df
 
-# Caminho para o arquivo Excel de entrada e saída
-input_file = 'cut_data2.xlsx'  # Substitua pelo caminho do seu arquivo Excel de entrada
-output_file = 'label_cut_data.xlsx'  # Substitua pelo caminho do seu arquivo Excel de saída
+# Paths for the input Excel file and the output Excel file
+input_file = 'cut_data2.xlsx'  # Replace with the path of your input Excel file
+output_file = 'label_cut_data.xlsx'  # Replace with the path of your output Excel file
 
-# Ler o arquivo Excel
+# Read the Excel file
 df = pd.read_excel(input_file)
 
-# Adicionar a nova coluna baseada na última coluna
+# Add the new column based on the last column
 df = add_binary_column(df)
 
-# Salvar o DataFrame modificado em um novo arquivo Excel
+# Save the modified DataFrame to a new Excel file
 df.to_excel(output_file, index=False)
 
-print("Processamento concluído. Arquivo modificado salvo como:", output_file)
-
+print("Process concluded. File modified saved as:", output_file)
