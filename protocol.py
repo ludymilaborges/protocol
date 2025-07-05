@@ -1,3 +1,5 @@
+## this code collects frontal video from the camera and saves it to a file, at the same time it creates a grid on the screen with 9 spots that moves around 3x3 grid every 30 sec.
+
 import cv2
 import numpy as np
 import time
@@ -43,7 +45,7 @@ while True:
 
     current_time = time.time()
 
-    # Move to the next square every 3 seconds
+    # Move to the next square every 30 seconds
     if current_time - last_move_time >= 30:
         col = (col + 1) % 3
         if col == 0:
