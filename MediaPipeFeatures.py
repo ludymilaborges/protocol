@@ -1,4 +1,6 @@
-#%%
+## this code extracts features from the video recorded from "protocol" code and save in a excel file. Also saves the videos with landmarks in the shared drive  and excludes 3s in the transitions
+
+# #%% 
 # Run 1st: Import the necessary modules.
 import mediapipe as mp
 from mediapipe.tasks import python
@@ -67,7 +69,7 @@ def plot_face_blendshapes_bar_graph(face_blendshapes):
     plt.text(patch.get_x() + patch.get_width(), patch.get_y(), f"{score:.4f}", va="top")
 
   ax.set_xlabel('Score')
-  ax.set_title("Face BlendshapesTESTE")
+  ax.set_title("Face Blendshapes")
   plt.tight_layout()
   #plt.savefig('foo.png',dpi=400)
   plt.show()
@@ -91,7 +93,7 @@ detector = vision.FaceLandmarker.create_from_options(options)
 #%% run to save only video features
 
 # Define the file name
-file_name = "face_blendshape_scores1.txt"
+file_name = "face_blendshape_scores.txt"
 
 # Open the file in append mode, using a buffer for writing
 with io.open(file_name, 'a', buffering=1) as file:
@@ -149,7 +151,7 @@ print("Frames with detected landmarks:", landmark_frame_count)
 # Define the input and output video file names
 input_video_path = 'video10.mp4'
 output_video_path = 'output_with_landmarks.mp4'
-file_name = "face_blendshape_scores_test.txt"
+file_name = "face_blendshape_scores.txt"
 
 # Open the file in append mode, using a buffer for writing
 with io.open(file_name, 'a', buffering=1) as file:
@@ -215,12 +217,12 @@ print("Face blendshape scores extraction and video saving completed.")
 print("Total frames:", frame_count)
 print("Frames with detected landmarks:", landmark_frame_count)
 
-#%%
+#%% saving data from txt to csv
 # Read the data
 import csv
 
 numbers = []
-with open('features.txt', 'r') as file:
+with open('face_blendshape_scores.txt', 'r') as file:
     for row in file:
         row = row.strip()
         if not row:
@@ -303,7 +305,7 @@ def process_dataframe(df):
 
 # Paths for input CSV file and output CSV file
 input_file = 'data.csv'  # Replace with the path of your input CSV file
-output_file = 'cut_data2.xlsx'  # Replace with the path of your output CSV file
+output_file = 'cut_data.xlsx'  # Replace with the path of your output CSV file
 
 # Read the CSV file
 df = pd.read_csv(input_file)
@@ -327,7 +329,7 @@ def add_binary_column(df):
     return df
 
 # Paths for the input Excel file and the output Excel file
-input_file = 'cut_data2.xlsx'  # Replace with the path of your input Excel file
+input_file = 'cut_data.xlsx'  # Replace with the path of your input Excel file
 output_file = 'label_cut_data.xlsx'  # Replace with the path of your output Excel file
 
 # Read the Excel file
